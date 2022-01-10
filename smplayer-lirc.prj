@@ -1,0 +1,403 @@
+[NAME]
+name=smplayer-lirc
+
+[VERSION]
+version=0.1
+
+[RELEASE]
+release=0.mrx8
+
+[GROUP]
+group=Applications/File
+
+[DESCRIPTION]
+0=SMPlayer control via Remote Control (LIRC)
+1=---
+2=More information: /usr/share/doc/package_name/repack.txt
+
+[MAINTAINER]
+maintainer=Alex Kotov
+
+[VENDOR]
+vendor=alex_q_2000 (C) 2022
+
+[SUMMARY]
+summary=SMPlayer control via Remote Control (LIRC)
+
+[URLCOPY]
+urlcopy=https://github.com/AKotov-dev/smplayer-lirc
+
+[LICENSE]
+license=GPLv3
+
+[DEPS]
+deps=smplayer lirc setserial zenity
+
+[META]
+meta=0
+
+[NOARCH]
+noarch=1
+
+[SIGN]
+sign=0
+
+[DEB]
+deb=1
+
+[FILES]
+0=/usr/share/applications/smplayer-lirc.desktop
+1=/usr/bin/smplayer-lirc
+2=/usr/share/doc/smplayer-lirc/
+
+[AFTERINSTALL]
+0=rm -f /etc/lirc/{lirc_options.conf,lircd.conf}
+1=
+2=if [[ $(uname -a | grep x86_64) ]]; then
+3=cat > /etc/lirc/lirc_options.conf <<EOF
+4=# These are the default options to lircd, if installed as
+5=# /etc/lirc/lirc_options.conf. See the lircd(8) and lircmd(8)
+6=# manpages for info on the different options.
+7=#
+8=# Some tools including mode2 and irw uses values such as
+9=# driver, device, plugindir and loglevel as fallback values
+10=# in not defined elsewhere.
+11=
+12=[lircd]
+13=nodaemon        = False
+14=driver          = default
+15=device          = /dev/lirc0
+16=output          = /run/lirc/lircd
+17=pidfile         = /run/lirc/lircd.pid
+18=plugindir       = /usr/lib64/lirc/plugins
+19=permission      = 666
+20=allow-simulate  = No
+21=repeat-max      = 600
+22=#effective-user =
+23=#listen         = [address:]port
+24=#connect        = host[:port]
+25=#loglevel       = 6
+26=#release        = true
+27=#release_suffix = _EVUP
+28=#logfile        = ...
+29=#driver-options = ...
+30=
+31=[lircmd]
+32=uinput          = False
+33=nodaemon        = False
+34=
+35=[modinit]
+36=code1 = rmmod serial_ir
+37=code2 = setserial /dev/ttyS0 uart none
+38=code3 = modprobe serial_ir
+39=
+40=# [lircd-uinput]
+41=# add-release-events = False
+42=# release-timeout    = 200
+43=# release-suffix     = _EVUP
+44=EOF
+45=else
+46=cat > /etc/lirc/lirc_options.conf <<EOF
+47=# These are the default options to lircd, if installed as
+48=# /etc/lirc/lirc_options.conf. See the lircd(8) and lircmd(8)
+49=# manpages for info on the different options.
+50=#
+51=# Some tools including mode2 and irw uses values such as
+52=# driver, device, plugindir and loglevel as fallback values
+53=# in not defined elsewhere.
+54=
+55=[lircd]
+56=nodaemon        = False
+57=driver          = default
+58=device          = /dev/lirc0
+59=output          = /run/lirc/lircd
+60=pidfile         = /run/lirc/lircd.pid
+61=plugindir       = /usr/lib/lirc/plugins
+62=permission      = 666
+63=allow-simulate  = No
+64=repeat-max      = 600
+65=#effective-user =
+66=#listen         = [address:]port
+67=#connect        = host[:port]
+68=#loglevel       = 6
+69=#release        = true
+70=#release_suffix = _EVUP
+71=#logfile        = ...
+72=#driver-options = ...
+73=
+74=[lircmd]
+75=uinput          = False
+76=nodaemon        = False
+77=
+78=[modinit]
+79=code1 = rmmod serial_ir
+80=code2 = setserial /dev/ttyS0 uart none
+81=code3 = modprobe serial_ir
+82=
+83=# [lircd-uinput]
+84=# add-release-events = False
+85=# release-timeout    = 200
+86=# release-suffix     = _EVUP
+87=EOF
+88=fi;
+89=
+90=cat > /etc/lirc/lircd.conf <<EOF
+91=# Please take the time to finish this file as described in
+92=# https://sourceforge.net/p/lirc-remotes/wiki/Checklist/
+93=# and make it available to others by sending it to
+94=# <lirc@bartelmus.de>
+95=#
+96=# This config file was automatically generated
+97=# using lirc-0.10.1(default) on Mon Jan 10 12:42:42 2022
+98=# Command line used: -f
+99=# Kernel version (uname -r): 5.15.11-desktop-3.mga8
+100=#
+101=# Remote name (as of config file): GoldStar
+102=# Brand of remote device, the thing you hold in your hand:
+103=# Remote device model nr:
+104=# Remote device info url:
+105=# Does remote device has a bundled capture device e. g., a
+106=#     usb dongle? :
+107=# For bundled USB devices: usb vendor id, product id
+108=#     and device string (use dmesg or lsusb):
+109=# Type of device controlled
+110=#     (TV, VCR, Audio, DVD, Satellite, Cable, HTPC, ...) :
+111=# Device(s) controlled by this remote:
+112=
+113=begin remote
+114=
+115=name  GoldStar
+116=flags RAW_CODES|CONST_LENGTH
+117=eps            30
+118=aeps          250
+119=
+120=gap          107882
+121=
+122=begin raw_codes
+123=
+124=name KEY_POWER
+125=9094    4418     652     457     672     465
+126=642    1596     667     481     625     486
+127=645     483     637     494     616     495
+128=632    1627     619    1620     626     505
+129=607    1632     625    1636     607    1634
+130=601    1637     622    1640     606     506
+131=619     515     592     532     599    1644
+132=595     532     598     532     598     533
+133=574     534     598    1664     575    1663
+134=599    1642     597     532     591    1648
+135=597    1665     574    1664     598    1644
+136=596
+137=
+138=name KEY_MUTE
+139=9091    4403     673     463     642     485
+140=647    1613     626     487     644     482
+141=644     489     613     514     611     498
+142=626    1635     612    1628     620     510
+143=609    1632     606    1633     629    1631
+144=601    1639     600    1639     621    1639
+145=601     508     620     511     596    1645
+146=618     514     593     534     598     531
+147=598     534     574     535     596    1664
+148=574    1664     599     534     573    1664
+149=591    1650     597    1664     574    1664
+150=588
+151=
+152=name KEY_NUMERIC_0
+153=9099    4408     648     479     652     458
+154=673    1586     652     460     671     465
+155=641     481     650     480     642     491
+156=610    1627     650    1591     640     491
+157=645    1596     637    1625     611    1628
+158=634    1607     629    1632     604     506
+159=625     504     624     508     597     532
+160=599    1641     599     530     599     514
+161=616     513     594    1643     619    1640
+162=600    1641     597    1641     620     516
+163=591    1643     619    1642     598    1642
+164=596
+165=
+166=name KEY_NUMERIC_1
+167=9097    4407     649     458     673     458
+168=673    1568     671     458     672     460
+169=647     481     650     461     668     464
+170=644    1592     670    1589     650     465
+171=665    1591     646    1600     640    1599
+172=665    1591     640    1607     629    1624
+173=649     484     607     502     623     505
+174=626    1615     627     501     631     502
+175=597     532     601     507     622    1639
+176=601    1640     598    1640     624     508
+177=597    1640     623    1639     601    1640
+178=598
+179=
+180=name KEY_NUMERIC_2
+181=9094    4415     649     459     672     458
+182=671    1587     652     459     671     482
+183=625     483     644     484     650     484
+184=623    1614     646    1595     638     492
+185=632    1610     637    1623     607    1632
+186=626    1616     629    1631     609     500
+187=624    1637     598     514     617     509
+188=621    1638     601     509     621     511
+189=595     532     599    1642     596     533
+190=599    1642     596    1643     620     532
+191=575    1647     615    1641     599    1648
+192=590
+193=
+194=name KEY_NUMERIC_3
+195=9106    4404     652     460     668     481
+196=627    1593     668     481     626     489
+197=643     481     637     495     615     500
+198=627    1627     613    1625     634     498
+199=601    1637     627    1635     611    1630
+200=603    1635     622    1639     603    1638
+201=599    1641     620     512     595     532
+202=601    1645     591     533     598     531
+203=599     533     574     534     597     532
+204=590    1651     597    1664     574     535
+205=596    1664     574    1664     592    1649
+206=598
+207=
+208=name KEY_UP
+209=9100    4408     649     459     673     457
+210=672    1587     652     459     671     464
+211=643     482     647     483     645     487
+212=612    1608     666    1592     641     488
+213=639    1602     639    1623     609    1629
+214=629    1614     627    1634     607     501
+215=626     504     625     506     598     532
+216=599     511     620     511     596     532
+217=600     510     619    1622     618    1642
+218=596    1641     621    1640     599    1642
+219=595    1642     621    1640     599    1643
+220=595
+221=
+222=name KEY_DOWN
+223=9125    4383     690     442     648     459
+224=672    1590     647     463     669     459
+225=670     461     646     482     650     460
+226=670    1589     650    1593     645     483
+227=645    1600     641    1594     668    1592
+228=637    1606     635    1605     657    1599
+229=636     493     634     498     605     525
+230=604     504     630     502     599     530
+231=601     508     621     511     597    1638
+232=626    1622     616    1640     598    1640
+233=624    1637     600    1641     597    1640
+234=622
+235=
+236=name KEY_RIGHT
+237=9098    4409     649     457     673     458
+238=678    1563     671     458     671     460
+239=647     482     650     460     670     463
+240=644    1592     670    1590     646     464
+241=669    1592     648    1594     642    1597
+242=668    1591     638    1604     629     501
+243=630    1612     625     503     625     503
+244=642     491     601     511     622     503
+245=634     499     600    1636     633     500
+246=598    1639     639    1624     602    1637
+247=599    1639     641    1622     601    1639
+248=598
+249=
+250=name KEY_LEFT
+251=9095    4409     649     459     673     457
+252=672    1568     671     459     671     461
+253=646     481     650     462     667     482
+254=618    1601     668    1591     650     480
+255=650    1591     635    1627     616    1622
+256=638    1602     636    1626     607    1631
+257=630    1611     626     502     624     509
+258=601     528     601     508     624     509
+259=596     532     600     510     620     515
+260=591    1640     623    1639     600    1641
+261=597    1641     621    1640     599    1642
+262=596
+263=
+264=name KEY_OK
+265=9108    4383     674     456     680     452
+266=647    1591     678     454     647     480
+267=651     460     670     462     645     483
+268=649    1593     645    1593     669     462
+269=645    1593     669    1592     644    1599
+270=637    1601     666    1592     637     492
+271=649     483     611    1627     648     483
+272=602     508     623     505     627    1614
+273=622     506     631    1610     624    1637
+274=600     512     619    1639     601    1637
+275=634    1609     620     507     628    1616
+276=619
+277=
+278=name KEY_MENU
+279=9101    4407     650     459     671     457
+280=672    1568     671     458     672     461
+281=647     480     650     460     670     463
+282=645    1591     670    1590     649     462
+283=668    1591     647    1595     638    1602
+284=667    1593     640    1620     625    1596
+285=665    1592     635     494     647     484
+286=604     506     623     504     625    1617
+287=623     505     627     506     598     531
+288=600    1640     598    1638     626    1638
+289=601    1639     599     531     599    1640
+290=598
+291=
+292=end raw_codes
+293=
+294=end remote
+295=EOF
+296=
+297=systemctl disable lircmd irexec; systemctl enable lircd; systemctl restart lircd
+
+[URL32]
+url32=https://github.com/AKotov-dev/smplayer-lirc
+
+[URL64]
+url64=https://github.com/AKotov-dev/smplayer-lirc
+
+[PROGRAMNAME]
+programname=smplayer-lirc
+
+[DEVTOOL]
+devtool=Shell
+
+[TOOLVERSION]
+toolversion=unknown
+
+[INFO]
+0=[b]smplayer-lirc[/b] - SMPlayer с ИК-пультом
+1=---
+2=Решил поиграться с SMPlayer и прикрутить к нему LIRC.
+3=
+4=Пакет smplayer-lirc ставит всё необходимое и делает первичную настройку. В меню, рядом с ярлыками запуска SMPlayer и SMTube будет создан дополнительный ярлык "SMPlayer (LIRC)" для запуска проигрывателя с поддержкой пульта.
+5=
+6=ИК-датчик и пульт были взяты от старинного телевизора GoldStar. ИК-датчик был собран по схеме (см. скриншот) и подключен к COM-порту (/dev/ttyS0).
+7=
+8=Поскольку параметры у всех пультов разные, желающие могут перестроить работу на свой пульт. Для этого достаточно перезаписать коды кнопок пульта с помощью команды irrecord -f и заменить полученным в результате файлом -> файл /etc/lirc/lirc_options.conf + перезапустить LIRC: systemctl restart lircd.
+9=
+10=Карта кнопок пульта для SMPlayer (~/.lircrc):
+11=[spoiler]
+12=KEY_OK - play/pause
+13=KEY_UP - предыдущий канал
+14=KEY_DOWN - следующий канал
+15=KEY_POWER - закрыть SMPlayer
+16=KEY_LEFT - уменьшить громкость
+17=KEY_RIGHT - увеличить громкость
+18=KEY_MUTE - отключить/включить звук
+19=KEY_NUMERIC_0 - полный экран
+20=[/spoiler]
+21=
+22=Полезные команды при запущенном lircd.service:
+23=---
+24=mode2 - проверить, видит ли комп нажатие любых кнопок пульта
+25=irrecord -f - создаёт файл с кодами нажатых кнопок с названиями вида KEY_BlaBla (см. выше про файл /etc/lirc/lirc_options.conf)
+26=service restart lircd - перезапуск lircd/перечитывает новый конфиг с кодами кнопок (/etc/lirc/lirc_options.conf)
+27=irw - вывести название/код уже записанных кнопок с именем пульта
+28=
+29=В Настройках SMPlayer:
+30=---
+31=Выбрать: Основные-Движок воспроизведения-mpv
+32=Снять галку: Дополнительно-MPlayer/mpv-Уведомления о сбоях MPlayer/mpv
+33=
+34=...и загрузить плейлист *.m3u в SMPlayer
