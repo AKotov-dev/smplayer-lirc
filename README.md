@@ -23,7 +23,7 @@ LIRC and Remote Control support for SMPlayer (rpm)
 + `service restart lircd` - перезапуск lircd/перечитывает новый конфиг с кодами кнопок (/etc/lirc/lircd.conf)
 + `irw` - вывести название/код уже записанных кнопок с именем пульта
 
-**В Настройках SMPlayer:**  
+**В настройках SMPlayer:**  
 + Выбрать: Основные-Движок воспроизведения-mpv  
 + Снять галку: Дополнительно-MPlayer/mpv-Уведомления о сбоях MPlayer/mpv
 
