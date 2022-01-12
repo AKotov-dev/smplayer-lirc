@@ -1,5 +1,5 @@
 # smplayer-lirc
-LIRC and Remote Control support for SMPlayer (rpm)
+LIRC and Remote Control support for SMPlayer (rpm/deb)
 
 Пакет smplayer-lirc ставит всё необходимое и делает первичную настройку. В меню, рядом с ярлыками запуска SMPlayer и SMTube будет создан дополнительный ярлык "SMPlayer (LIRC)" для запуска проигрывателя с поддержкой пульта.
 
